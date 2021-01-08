@@ -31,6 +31,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token',
     ];
 
     /**
@@ -42,19 +43,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-        //RELATIONS
+    //RELATIONS
 
         public function roles()
         {
             return $this->belongsToMany(Role::class);
         }
     
-        public function companies()
-        {
-            return $this->hasManyThrough(Company::class, Chapter::class);
-        }
     
-        //MUTATORS
+    //MUTATORS
     
         public function getPhoneAttribute($value)
         {

@@ -15,12 +15,11 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('description'); //TODO: check if this mail is allready in use by user (must have unique email)
+            $table->string('name');
+            $table->string('description');
             $table->tinyInteger('write')->default(0);
             $table->timestamps();
         });
-
         
     }
 
