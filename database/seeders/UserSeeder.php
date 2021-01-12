@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
 
         $metaadmin->roles()->attach([4]);
 
-        User::factory(10000)
+        User::factory(100)
             ->has(Role::factory()->count(2))
             ->create();
 

@@ -4,13 +4,7 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-type Query @guard {
-    users: [User!]! @all
-    user(id: ID @eq): User @find
-    roles: [Role!] @all
-    role(id: ID @eq): Role @find
-    me: User @auth(guard: "api")
-}
+
 
 type User {
 
@@ -25,21 +19,20 @@ type User {
 
 }
 
-type Role {
-    id: ID!
-    name: String!
-    description: String!
-    users: [User!] @belongsToMany
+type Query @guard {
+    users: [User!]! @all @can(ability: "viewAny")
+    user(id: ID @eq): User @find @can(ability: "view", find: "id")
+    me: User @auth(guard: "api")
 }
 
 type Mutation {
+    login(email: String!, password: String!): String
+        @field(resolver: "AuthMutator@resolve")
+
     createUser(
         name: String!
         email: String! @rules(apply: ["email", "unique:users"])
         password: String! @bcrypt @rules(apply: ["min:6"])
     ): User @create @middleware(checks: ["auth:api"])
-
-    login(email: String!, password: String!): String
-        @field(resolver: "AuthMutator@resolve")
 }
 
