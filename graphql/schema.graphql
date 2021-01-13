@@ -2,12 +2,12 @@
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
-scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-
+#import role.graphql
 
 type User {
-
     id: ID!
     name: String!
     email: String!
@@ -16,7 +16,6 @@ type User {
     roles: [Role!] @belongsToMany
     created_at: DateTime!
     updated_at: DateTime!
-
 }
 
 type Query @guard {
@@ -33,6 +32,5 @@ type Mutation {
         name: String!
         email: String! @rules(apply: ["email", "unique:users"])
         password: String! @bcrypt @rules(apply: ["min:6"])
-    ): User @create @middleware(checks: ["auth:api"])
+    ): User @create @middleware(checks: ["auth:api"]) @can(ability: "create")
 }
-

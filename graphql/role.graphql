@@ -1,0 +1,11 @@
+type Role {
+    id: ID!
+    name: String!
+    description: String!
+    users: [User!] @belongsToMany
+}
+
+extend type Query @guard {
+    roles: [Role!] @all
+    role(id: ID @eq): Role @find
+}

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
@@ -17,11 +20,6 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -45,21 +43,29 @@ class User extends Authenticatable
 
     //RELATIONS
 
-        public function roles()
-        {
-            return $this->belongsToMany(Role::class);
-        }
-    
-    
-    //MUTATORS
-    
-        public function getPhoneAttribute($value)
-        {
-            return Crypt::decryptString($value);
-        }
-        public function setPhoneAttribute($value)
-        {
-            $this->attributes['phone'] = Crypt::encryptString($value);
-        }
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
+    public function companies(): HasMany
+    {
+        return $this->hasMany(Company::class);
+    }
+
+    public function chapters(): HasManyThrough
+    {
+        return $this->hasManyThrough(Chapter::class, Company::class);
+    }
+
+    //MUTATORS
+
+    public function getPhoneAttribute($value)
+    {
+        return Crypt::decryptString($value);
+    }
+    public function setPhoneAttribute($value)
+    {
+        $this->attributes['phone'] = Crypt::encryptString($value);
+    }
 }
