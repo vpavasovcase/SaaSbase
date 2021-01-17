@@ -11,15 +11,6 @@ use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 class AuthMutator
 {
     /**
-     * @param  null  $_
-     * @param  array<string, mixed>  $args
-     */
-    public function __invoke($_, array $args)
-    {
-        // TODO implement the resolver
-    }
-
-        /**
      * Return a value for the field.
      *
      * @param  null  $rootValue Usually contains the result returned from the parent field. In this case, it is always `null`.
@@ -32,7 +23,7 @@ class AuthMutator
     {
         $credentials = Arr::only($args, ['email', 'password']);
 
-        if (Auth::once($credentials)) {
+        if (Auth::attempt($credentials)) {
             $token = Str::random(60);
 
             $user = auth()->user();
@@ -44,5 +35,4 @@ class AuthMutator
 
         return null;
     }
-    
 }

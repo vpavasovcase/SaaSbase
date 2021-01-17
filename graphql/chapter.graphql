@@ -1,0 +1,11 @@
+type Chapter {
+    id: ID!
+    name: String!
+    admin: User @belongsTo
+    company: Company @belongsTo
+}
+
+extend type Query @guard {
+    chapters: [Chapter!] @all
+    chapter(id: ID @eq): Chapter @find
+}

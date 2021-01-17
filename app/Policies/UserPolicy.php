@@ -20,7 +20,7 @@ class UserPolicy
     public function viewAny(User $user)
     {
 
-        return 0 < $user->roles->whereBetween('id', [1, 3])->count();
+        return 0 < $user->roles->whereBetween('id', [1, 4])->count();
     }
 
     /**
@@ -32,7 +32,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return 0 < $user->roles->whereBetween('id', [1, 3])->count();
+        return 0 < $user->roles->whereBetween('id', [1, 4])->count();
     }
 
     /**

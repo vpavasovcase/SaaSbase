@@ -1,0 +1,30 @@
+type Company {
+    id: ID!
+    name: String!
+    vpavasov: String!
+    users: [User!] @belongsTo
+    chapters: [Chapter!] @hasMany
+}
+
+extend type Query {
+    companies: [Company!] @all
+    company(id: ID @eq): Company @find
+}
+extend type Mutation {
+    createCompany(input: CreateCompanyInput!): Company
+        @create
+        @middleware(checks: ["auth:api"])
+        @can(ability: "create")
+}
+input CreateCompanyInput {
+    name: String!
+    email: String! @rules(apply: ["email"])
+    address: String
+    phone: String
+    vat: String
+    type: String
+    country_id: Int
+    chapter_id: Int
+    language_id: Int
+    admin: Int
+}

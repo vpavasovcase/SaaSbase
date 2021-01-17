@@ -47,16 +47,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-
     public function companies(): HasMany
     {
-        return $this->hasMany(Company::class);
+        return $this->hasMany(Company::class, 'admin');
+    }
+    public function chapters(): HasMany
+    {
+        return $this->hasMany(Chapter::class, 'admin');
     }
 
-    public function chapters(): HasManyThrough
-    {
-        return $this->hasManyThrough(Chapter::class, Company::class);
-    }
 
     //MUTATORS
 

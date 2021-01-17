@@ -6,6 +6,8 @@ scalar DateTime
     @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 #import role.graphql
+#import company.graphql
+#import chapter.graphql
 
 type User {
     id: ID!
@@ -14,6 +16,8 @@ type User {
     phone: String!
     password: String!
     roles: [Role!] @belongsToMany
+    chapters: [Chapter!] @hasMany
+    companies: [Company!] @hasMany
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -26,11 +30,11 @@ type Query @guard {
 
 type Mutation {
     login(email: String!, password: String!): String
-        @field(resolver: "AuthMutator@resolve")
+        @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolve")
 
     createUser(
         name: String!
         email: String! @rules(apply: ["email", "unique:users"])
-        password: String! @bcrypt @rules(apply: ["min:6"])
+        password: String! @bcrypt @rules(apply: ["min:8"])
     ): User @create @middleware(checks: ["auth:api"]) @can(ability: "create")
 }
