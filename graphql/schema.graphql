@@ -30,7 +30,7 @@ type Query @guard {
 
 type Mutation {
     login(email: String!, password: String!): String
-        @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolve")
+        @field(resolver: "AuthMutator@resolve")
 
     createUser(
         name: String!
