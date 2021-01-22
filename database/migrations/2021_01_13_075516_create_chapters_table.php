@@ -24,12 +24,10 @@ class CreateChaptersTable extends Migration
             $table->integer('company_id')->unsigned()->index();
             $table->integer('country_id')->unsigned()->index();
             $table->integer('language_id')->unsigned()->index();
-            $table->integer('admin')->unsigned()->index();
             $table->timestamps();
 
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('country_id')->references('id')->on('countries');
-            $table->foreign('admin')->references('id')->on('users');
             $table->foreign('language_id')->references('id')->on('languages');
         });
     }

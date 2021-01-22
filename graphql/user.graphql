@@ -5,8 +5,8 @@ type User {
     phone: String
     password: String!
     roles: [Role!] @belongsToMany
-    chapters: [Chapter!] @hasMany
-    companies: [Company!] @hasMany
+    chapters: [Chapter!] @belongsToMany
+    companies: [Company!] @belongsToMany
     created_at: DateTime!
     updated_at: DateTime!
 }

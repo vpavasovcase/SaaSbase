@@ -54,13 +54,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
-    public function companies(): HasMany
+    public function companies(): BelongsToMany
     {
-        return $this->hasMany(Company::class, 'admin');
+        return $this->belongsToMany(Company::class);
     }
-    public function chapters(): HasMany
+    public function chapters(): BelongsToMany
     {
-        return $this->hasMany(Chapter::class, 'admin');
+        return $this->belongsToMany(Chapter::class);
     }
 
 

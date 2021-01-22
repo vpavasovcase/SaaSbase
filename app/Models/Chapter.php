@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Chapter extends Model
 {
@@ -24,8 +25,8 @@ class Chapter extends Model
     {
         return $this->belongsTo(Language::class);
     }
-    public function admin(): BelongsTo
+    public function users(): BelongsToMany
     {
-        return $this->belongsTo(User::class, 'admin');
+        return $this->belongsToMany(User::class);
     }
 }

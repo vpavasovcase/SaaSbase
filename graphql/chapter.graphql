@@ -1,8 +1,15 @@
 type Chapter {
     id: ID!
     name: String!
-    admin: User @belongsTo
-    company: Company @belongsTo
+    email: String! @rules(apply: ["email"])
+    address: String!
+    phone: String
+    vat: String!
+    type: String
+    country: Country! @belongsTo
+    language: Language! @belongsTo
+    users: [User!] @belongsToMany
+    company: [Chapter!] @belongsTo
 }
 
 extend type Query {

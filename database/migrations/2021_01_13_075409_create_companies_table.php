@@ -24,12 +24,10 @@ class CreateCompaniesTable extends Migration
             $table->string('type')->nullable();
             $table->integer('country_id')->unsigned()->index();
             $table->integer('language_id')->unsigned()->index();
-            $table->integer('admin')->unsigned()->index();
             $table->timestamps();
 
             $table->foreign('country_id')->references('id')->on('countries');
             $table->foreign('language_id')->references('id')->on('languages');
-            $table->foreign('admin')->references('id')->on('users');
         });
     }
 
