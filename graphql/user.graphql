@@ -7,6 +7,7 @@ type User {
     roles: [Role!] @belongsToMany
     chapters: [Chapter!] @belongsToMany
     companies: [Company!] @belongsToMany
+    language: Language! @belongsTo
     created_at: DateTime!
     updated_at: DateTime!
 }

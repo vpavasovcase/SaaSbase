@@ -20,7 +20,7 @@ class UserMutator
     }
     public function upsert($rootValue, array $args)
     {
-        //CustomHelpers::consoleDrop($args);
+        CustomHelpers::consoleDrop($args);
 
         //CustomHelpers::consoleDropUser();
 

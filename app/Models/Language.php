@@ -18,4 +18,8 @@ class Language extends Model
     {
         return $this->hasMany(Chapter::class);
     }
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

@@ -20,13 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('title');
             $table->string('phone');
+            $table->string('language_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->timestamps();
         });
-
     }
 
     /**

@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Chapter;
+use App\Models\Company;
 use App\Models\User;
 use App\Models\Role;
+use ChapterUser;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -18,26 +21,44 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-
         $metaadmin = new User;
         $metaadmin->name = "Vojislav Pavasović";
         $metaadmin->email = "vpavasov@gmail.com";
         $metaadmin->password = Hash::make('kjm56era');
         $metaadmin->save();
 
-        $metaadmin->roles()->attach([1, 2, 3]);
+        $companyadmin = new User;
+        $companyadmin->name = "Tomislav Mišetić";
+        $companyadmin->email = "tomo@gmail.com";
+        $companyadmin->password = Hash::make('tomislavmisetic');
+        $companyadmin->save();
 
-        $metaadmin = new User;
-        $metaadmin->name = "Meho Muratović";
-        $metaadmin->email = "meho@gmail.com";
-        $metaadmin->password = Hash::make('zidarska');
-        $metaadmin->save();
+        $chapteradmin = new User;
+        $chapteradmin->name = "Milan Jukić";
+        $chapteradmin->email = "miki@gmail.com";
+        $chapteradmin->password = Hash::make('milanjukic');
+        $chapteradmin->save();
 
-        $metaadmin->roles()->attach([4]);
+        $notadmin = new User;
+        $notadmin->name = "Meho Muratović";
+        $notadmin->email = "meho@gmail.com";
+        $notadmin->password = Hash::make('zidarska');
+        $notadmin->save();
 
         User::factory(100)
             ->has(Role::factory()->count(2))
+            ->has(Company::factory()->count(2))
+            ->has(Chapter::factory()->count(3))
             ->create();
+
+        $metaadmin->roles()->attach([1]);
+        $companyadmin->roles()->attach(2);
+        $chapteradmin->roles()->attach([3]);
+        $notadmin->roles()->attach([4]);
+
+        $companyadmin->companies()->attach(1);
+        $chapteradmin->chapters()->attach(1);
+
 
         //
     }

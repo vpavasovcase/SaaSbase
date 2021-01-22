@@ -27,10 +27,9 @@ class ChapterFactory extends Factory
             'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,
             'type' => $this->faker->word(6),
-            'company_id' => $this->faker->numberBetween(1, 30),
+            'company_id' => $this->faker->numberBetween(1, 60),
             'country_id' => $this->faker->numberBetween(1, 239),
             'language_id' => $this->faker->numberBetween(1, 182),
-            'admin' => $this->faker->numberBetween(1, 20),
         ];
     }
 }

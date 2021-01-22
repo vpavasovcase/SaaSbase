@@ -30,7 +30,6 @@ class CompanyFactory extends Factory
             'type' => $this->faker->word(6),
             'country_id' => $this->faker->numberBetween(1, 239),
             'language_id' => $this->faker->numberBetween(1, 182),
-            'admin' => $this->faker->numberBetween(1, 20),
         ];
     }
 }

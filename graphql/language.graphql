@@ -1,0 +1,14 @@
+type Language {
+    id: ID!
+    code: String!
+    name: String!
+    native_name: String
+    companies: Company! @hasMany
+    chapters: Chapter! @hasMany
+    users: User! @hasMany
+}
+
+extend type Query {
+    languages: [Language!] @all
+    language(id: ID @eq): Language @find
+}
