@@ -58,7 +58,7 @@ return [
     |
     */
 
-    'guard' => 'web',
+    'guard' => 'api',
 
     /*
     |--------------------------------------------------------------------------
@@ -208,7 +208,7 @@ return [
     |
     */
 
-    'debug' => \GraphQL\Error\Debug::INCLUDE_DEBUG_MESSAGE | \GraphQL\Error\Debug::INCLUDE_TRACE,
+    'debug' => \GraphQL\Error\Debug::INCLUDE_DEBUG_MESSAGE | \GraphQL\Error\Debug::RETHROW_INTERNAL_EXCEPTIONS,
 
     /*
     |--------------------------------------------------------------------------

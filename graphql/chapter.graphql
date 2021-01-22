@@ -5,7 +5,7 @@ type Chapter {
     company: Company @belongsTo
 }
 
-extend type Query @guard {
+extend type Query {
     chapters: [Chapter!] @all
     chapter(id: ID @eq): Chapter @find
 }

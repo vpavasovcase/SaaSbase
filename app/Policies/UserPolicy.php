@@ -17,6 +17,8 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
+
+
     public function viewAny(User $user)
     {
 
@@ -43,7 +45,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return 0 < $user->roles->whereBetween('id', [1, 3])->count();
+        return 0 < $user->roles->whereBetween('id', [1, 4])->count();
     }
 
     /**

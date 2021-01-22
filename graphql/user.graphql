@@ -1,0 +1,42 @@
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    phone: String
+    password: String!
+    roles: [Role!] @belongsToMany
+    chapters: [Chapter!] @hasMany
+    companies: [Company!] @hasMany
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Query @guard {
+    users: [User!]! @all @can(ability: "viewAny")
+    user(id: ID @eq): User @find @can(ability: "view", find: "id")
+    me: User @auth(guard: "api")
+}
+
+type Mutation {
+    login(email: String!, password: String!): String
+        @field(resolver: "AuthMutator@resolve")
+
+    createUser(
+        name: String!
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @bcrypt @rules(apply: ["min:8"])
+        role: Int!
+        company: Int
+        chapter: Int
+    ): User
+        @middleware(checks: ["auth:api"])
+        @can(ability: "create")
+        @field(resolver: "UserMutator@upsert")
+}
+
+input CreateUserInput {
+    name: String!
+    email: String! @rules(apply: ["email", "unique:users"])
+    password: String! @bcrypt @rules(apply: ["min:8"])
+    role: Int!
+}
