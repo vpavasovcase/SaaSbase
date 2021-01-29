@@ -7,5 +7,7 @@ scalar DateTime
 
 #import user.graphql
 #import role.graphql
+#import country.graphql
+#import language.graphql
 #import company.graphql
 #import chapter.graphql

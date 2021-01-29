@@ -30,8 +30,9 @@ type Mutation {
         company: Int
         chapter: Int
     ): User
-        @middleware(checks: ["auth:api"])
+        @guard(checks: ["auth:api"])
         @can(ability: "create")
+        @createUser
         @field(resolver: "UserMutator@upsert")
 }
 

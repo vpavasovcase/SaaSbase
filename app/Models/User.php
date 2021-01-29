@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Tools\CustomHelpers;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Support\Facades\Crypt;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class User extends Authenticatable
 {
@@ -64,6 +68,21 @@ class User extends Authenticatable
     public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class);
+    }
+
+    public function allUserChapters()
+    {
+        $flatChapters = $this->chapters->pluck('id');
+        foreach ($this->companies as $company) {
+            $ajdis = $company->chapters->pluck('id');
+            $flatChapters->push($ajdis);
+        }
+        return $flatChapters->flatten()->unique();
+    }
+
+    public function canEditChapter(int $chapter): bool
+    {
+        return $this->roles->contains('id', 3) && $this->chapters->contains('id', $chapter);
     }
 
 

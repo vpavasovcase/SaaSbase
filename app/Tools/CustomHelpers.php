@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Request;
 
 class CustomHelpers
 {
-    private static function backtraceOne()
+    public static function backtraceOne()
     {
 
 
         echo 'Drop from function: <b> ' . debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[1]['function'] . '</b></br>';
-        echo 'called from: <b> ' . debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[1]['file'] . '</b> line: <b> ' . debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 1)[0]['line'] . '</b></br>';
+        echo 'called from: <b> ' . debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[1]['file'] . '</b> line: <b> ' . debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[1]['line'] . '</b></br>';
     }
 
     public static function consoleDrop(mixed $var, string $title = "")

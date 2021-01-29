@@ -56,8 +56,8 @@ class UserSeeder extends Seeder
         $chapteradmin->roles()->attach([3]);
         $notadmin->roles()->attach([4]);
 
-        $companyadmin->companies()->attach(1);
-        $chapteradmin->chapters()->attach(1);
+        $companyadmin->companies()->attach([1, 2, 3]);
+        $chapteradmin->chapters()->attach([1, 2, 3]);
 
 
         //

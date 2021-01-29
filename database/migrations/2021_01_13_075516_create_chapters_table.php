@@ -21,7 +21,7 @@ class CreateChaptersTable extends Migration
             $table->string('address')->required();
             $table->string('phone')->required();
             $table->string('type')->nullable();
-            $table->integer('company_id')->unsigned()->index();
+            $table->integer('company_id')->required()->unsigned()->index();
             $table->integer('country_id')->unsigned()->index();
             $table->integer('language_id')->unsigned()->index();
             $table->timestamps();

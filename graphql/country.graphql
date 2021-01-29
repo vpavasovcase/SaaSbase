@@ -1,0 +1,13 @@
+type Country {
+    id: ID!
+    code: String!
+    name: String!
+    native_name: String
+    companies: Company! @hasMany
+    chapters: Chapter! @hasMany
+}
+
+extend type Query {
+    countries: [Country!] @all
+    country(id: ID @eq): Country @find
+}

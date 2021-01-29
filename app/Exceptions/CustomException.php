@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Tools\CustomHelpers;
 use Exception;
+use Illuminate\Support\Facades\Config;
 use Nuwave\Lighthouse\Exceptions\RendersErrorsExtensions;
 
 class CustomException extends Exception implements RendersErrorsExtensions
@@ -11,12 +13,14 @@ class CustomException extends Exception implements RendersErrorsExtensions
      * @var @string
      */
     protected $reason;
+    protected $code;
 
-    public function __construct(string $message, string $reason)
+    public function __construct(string $message, string $reason = null, int $code = null)
     {
         parent::__construct($message);
 
         $this->reason = $reason;
+        $this->code = $code;
     }
 
     /**
@@ -51,9 +55,12 @@ class CustomException extends Exception implements RendersErrorsExtensions
      */
     public function extensionsContent(): array
     {
-        return [
-            'some' => 'additional information',
+
+        $extra = [
             'reason' => $this->reason,
+            'code' => $this->code,
         ];
+
+        return $extra;
     }
 }

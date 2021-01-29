@@ -9,7 +9,7 @@ type Chapter {
     country: Country! @belongsTo
     language: Language! @belongsTo
     users: [User!] @belongsToMany
-    company: [Chapter!] @belongsTo
+    company: Company! @belongsTo
 }
 
 extend type Query {
