@@ -22,15 +22,11 @@ class UserMutator
     public function upsert($rootValue, array $args)
     {
 
-        $currentUser = Request::user();
-
-
         $user = new User();
         $user->name = $args['name'];
         $user->email = $args['email'];
         $user->password = $args['password'];
         $user->save();
-
 
         $company = Company::find($args['company']);
         //$chapter = Chapter::find($args['chapter']);
@@ -38,14 +34,6 @@ class UserMutator
         $user->chapters()->save($user);
 
         $user->roles()->attach($args['role']);
-
-
-
-        //CustomHelpers::consoleDrop($user);
-
-
-
-
 
         return $user;
     }
