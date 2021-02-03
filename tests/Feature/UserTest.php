@@ -3,22 +3,22 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use MakesGraphQLRequests;
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     public function testQueriesUser(): void
     {
         $user = User::find(1);
 
-        $response = $this->withHeaders([
-            'Authorization' => "Bearer $user->api_token",
-        ])->graphQL(
+        $response = $this->actingAs($user, 'api')->graphQL(
             /** @lang GraphQL */
             '
             {
@@ -29,7 +29,8 @@ class UserTest extends TestCase
                 }
             }
             '
-        )->assertJson([
+        );
+        $response->assertJson([
             'data' => [
                 'users' => [
                     [
@@ -44,14 +45,10 @@ class UserTest extends TestCase
 
     public function testCreatesUser(): void
     {
-        //User::where('email', '=', 'testmail@test.hr')->first()->delete();
 
         $user = User::find(1);
 
-        $response = $this->withHeaders([
-            'Authorization' => "Bearer $user->api_token",
-        ])->graphQL(
-            /** @lang GraphQL */
+        $response = $this->actingAs($user, 'api')->graphQL(
             '
             mutation {
                 createUser(           
@@ -69,10 +66,40 @@ class UserTest extends TestCase
             'data' => [
                 'createUser' =>
                 [
-                    'name' => 'Test Name',
+                    'name' => 'Testing Name',
                 ]
 
             ]
+        ]);
+    }
+
+    public function testUnauthenticatedCreatesUser(): void
+    {
+
+        $user = User::find(4);
+
+        $response = $this->actingAs($user, 'api')->graphQL(
+            '
+            mutation {
+                createUser(           
+                name: "Testing Name", 
+                  email: "test@test.hr", 
+                    password: "testpass", 
+                  role: 2,
+                company: 1
+                chapter: 1){
+                  name    
+                }  
+              }
+            '
+        )->assertJson([
+
+            'errors' =>
+            [
+                ['message' => 'You are not authorized to add users.']
+            ]
+
+
         ]);
     }
 }

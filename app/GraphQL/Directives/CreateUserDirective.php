@@ -28,16 +28,17 @@ GRAPHQL;
 
         //private $errorMessage = "";
 
+        //CustomHelpers::consoleDrop((array)$fieldValue);
+
         $resolver = $fieldValue->getResolver();
 
         $fieldValue->setResolver(function ($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo) use ($resolver) {
             // Do something before the resolver, e.g. validate $args, check authentication
 
             $authorized = false;
+            $message = '';
 
             $currentUser = request()->user();
-
-            //CustomHelpers::consoleDropUser();
 
             $role = $currentUser->roles->contains('id', 1) ? 1 : ($currentUser->roles->contains('id', 2) ? 2 : ($currentUser->roles->contains('id', 3) ? 3 : 0));
 
@@ -53,12 +54,15 @@ GRAPHQL;
                         if ($args['role'] === 3 && $currentUser->allUserChapters()->contains($args['chapter'])) {
                             $authorized = true;
                         }
+                        $message = 'You are not authorized to create users for this company or chapter';
+
                         break;
                     }
                 case 3: {
                         if ($args['role'] === 3 && $currentUser->allUserChapters()->contains($args['chapter'])) {
                             $authorized = true;
                         }
+                        $message = 'You are not authorized to create users for this company or chapter';
                         break;
                     }
                 default:
@@ -70,7 +74,7 @@ GRAPHQL;
             if ($authorized == false) {
                 throw new CustomException(
                     'You are not authorized to add users.',
-                    'The reason why this error was thrown, is rendered in the extension output.'
+                    $message,
                 );
             }
 

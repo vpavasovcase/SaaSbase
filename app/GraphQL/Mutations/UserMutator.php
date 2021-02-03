@@ -30,8 +30,8 @@ class UserMutator
 
         $company = Company::find($args['company']);
         //$chapter = Chapter::find($args['chapter']);
-        $user->companies()->save($company);
-        $user->chapters()->save($user);
+        $user->companies()->attach($company);
+        $user->chapters()->attach($user);
 
         $user->roles()->attach($args['role']);
 
