@@ -53,7 +53,7 @@ class UserTest extends TestCase
             mutation {
                 createUser(           
                 name: "Testing Name", 
-                  email: "test@test.hr", 
+                  email: "teeest@test.hr", 
                     password: "testpass", 
                   role: 2,
                 company: 1
@@ -88,6 +88,96 @@ class UserTest extends TestCase
                   role: 2,
                 company: 1
                 chapter: 1){
+                  name    
+                }  
+              }
+            '
+        )->assertJson([
+
+            'errors' =>
+            [
+                ['message' => 'You are not authorized to add users.']
+            ]
+
+
+        ]);
+    }
+
+    public function testLowerAdminCreatesUser(): void
+    {
+
+        $user = User::find(3);
+
+        $response = $this->actingAs($user, 'api')->graphQL(
+            '
+            mutation {
+                createUser(           
+                name: "Testing Name", 
+                  email: "test@test.hr", 
+                    password: "testpass", 
+                  role: 2,
+                company: 1
+                chapter: 1){
+                  name    
+                }  
+              }
+            '
+        )->assertJson([
+
+            'errors' =>
+            [
+                ['message' => 'You are not authorized to add users.']
+            ]
+
+
+        ]);
+    }
+
+    public function testCreatesDifferentCompanyUser(): void
+    {
+
+        $user = User::find(2);
+
+        $response = $this->actingAs($user, 'api')->graphQL(
+            '
+            mutation {
+                createUser(           
+                name: "Testing Name", 
+                  email: "test@test.hr", 
+                    password: "testpass", 
+                  role: 2,
+                company: 123
+                chapter: 1){
+                  name    
+                }  
+              }
+            '
+        )->assertJson([
+
+            'errors' =>
+            [
+                ['message' => 'You are not authorized to add users.']
+            ]
+
+
+        ]);
+    }
+
+    public function testCreatesDifferentChapterUser(): void
+    {
+
+        $user = User::find(3);
+
+        $response = $this->actingAs($user, 'api')->graphQL(
+            '
+            mutation {
+                createUser(           
+                name: "Testing Name", 
+                  email: "test@test.hr", 
+                    password: "testpass", 
+                  role: 3,
+                company: null
+                chapter: 124){
                   name    
                 }  
               }

@@ -31,18 +31,23 @@ class UserSeeder extends Seeder
         $companyadmin->name = "Tomislav Mišetić";
         $companyadmin->email = "tomo@gmail.com";
         $companyadmin->password = Hash::make('tomislavmisetic');
+        $companyadmin->created_by = 1;
         $companyadmin->save();
 
         $chapteradmin = new User;
         $chapteradmin->name = "Milan Jukić";
         $chapteradmin->email = "miki@gmail.com";
         $chapteradmin->password = Hash::make('milanjukic');
+        $chapteradmin->created_by = 2;
+
         $chapteradmin->save();
 
         $notadmin = new User;
         $notadmin->name = "Meho Muratović";
         $notadmin->email = "meho@gmail.com";
         $notadmin->password = Hash::make('zidarska');
+        $notadmin->created_by = 3;
+
         $notadmin->save();
 
         User::factory(100)

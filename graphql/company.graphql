@@ -13,11 +13,11 @@ type Company {
 }
 
 extend type Query {
-    companies: [Company!] @all
-    company(id: ID @eq): Company @find
+    companies: [Company!] @all @can(ability: "viewAny")
+    company(id: ID @eq): Company @find @can(ability: "view", find: "id")
 }
 extend type Mutation {
-    createCompany(input: CreateCompanyInput!): Company
+    createCompany(input: CreateCompanyInput! @spread): Company
         @create
         @middleware(checks: ["auth:api"])
         @can(ability: "create")
@@ -31,5 +31,4 @@ input CreateCompanyInput {
     type: String
     country_id: Int
     language_id: Int
-    user: Int
 }

@@ -36,7 +36,7 @@ GRAPHQL;
             // Do something before the resolver, e.g. validate $args, check authentication
 
             $authorized = false;
-            $message = '';
+            $reason = '';
 
             $currentUser = request()->user();
 
@@ -50,11 +50,13 @@ GRAPHQL;
                 case 2: {
                         if ($args['role'] === 2 && $currentUser->companies->contains('id', $args['company'])) {
                             $authorized = true;
+                            break;
                         }
                         if ($args['role'] === 3 && $currentUser->allUserChapters()->contains($args['chapter'])) {
                             $authorized = true;
+                            break;
                         }
-                        $message = 'You are not authorized to create users for this company or chapter';
+                        $reason = 'You are not authorized to create users for this company or chapter';
 
                         break;
                     }
@@ -62,7 +64,7 @@ GRAPHQL;
                         if ($args['role'] === 3 && $currentUser->allUserChapters()->contains($args['chapter'])) {
                             $authorized = true;
                         }
-                        $message = 'You are not authorized to create users for this company or chapter';
+                        $reason = 'You are not authorized to create users for this company or chapter';
                         break;
                     }
                 default:
@@ -74,7 +76,7 @@ GRAPHQL;
             if ($authorized == false) {
                 throw new CustomException(
                     'You are not authorized to add users.',
-                    $message,
+                    $reason,
                 );
             }
 
