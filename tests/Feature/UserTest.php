@@ -99,7 +99,6 @@ class UserTest extends TestCase
                 ['message' => 'You are not authorized to add users.']
             ]
 
-
         ]);
     }
 
