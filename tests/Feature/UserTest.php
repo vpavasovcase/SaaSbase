@@ -73,10 +73,10 @@ class UserTest extends TestCase
         ]);
     }
 
-    public function testUnauthenticatedCreatesUser(): void
+    public function testUnauthorizedCreatesUser(): void
     {
 
-        $user = User::find(4);
+        $user = User::find(23);
 
         $response = $this->actingAs($user, 'api')->graphQL(
             '

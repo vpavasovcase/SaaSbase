@@ -66,4 +66,23 @@ class CompanyTest extends TestCase
             ]
         ]);
     }
+
+
+    public function testQueriesCompaniesUnauthorized(): void
+    {
+        $user = User::find(2);
+
+        $response = $this->actingAs($user, 'api')->graphQL(
+            /** @lang GraphQL */
+            '
+            {
+                companies {
+                    id
+                    name
+                }
+            }
+            '
+        );
+        $response->assertForbidden();
+    }
 }

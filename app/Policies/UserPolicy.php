@@ -59,7 +59,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        $auth =  $user->roles->whereBetween('id', [1, 3])->count();
+        return 0 < $user->roles->whereBetween('id', [1, 3])->count();
     }
 
     /**

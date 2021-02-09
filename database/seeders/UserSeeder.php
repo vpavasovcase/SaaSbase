@@ -39,7 +39,6 @@ class UserSeeder extends Seeder
         $chapteradmin->email = "miki@gmail.com";
         $chapteradmin->password = Hash::make('milanjukic');
         $chapteradmin->created_by = 2;
-
         $chapteradmin->save();
 
         $notadmin = new User;
